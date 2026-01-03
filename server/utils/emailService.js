@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 // Create email transporter
 const createTransporter = () => {
@@ -12,7 +12,7 @@ const createTransporter = () => {
 };
 
 // Send contact form notification
-const sendContactNotification = async (contactData) => {
+export const sendContactNotification = async (contactData) => {
   const transporter = createTransporter();
   
   const mailOptions = {
@@ -43,7 +43,7 @@ const sendContactNotification = async (contactData) => {
 };
 
 // Send admission form notification
-const sendAdmissionNotification = async (admissionData) => {
+export const sendAdmissionNotification = async (admissionData) => {
   const transporter = createTransporter();
   
   const mailOptions = {
@@ -78,9 +78,4 @@ const sendAdmissionNotification = async (admissionData) => {
     console.error('Error sending admission notification:', error);
     return false;
   }
-};
-
-module.exports = {
-  sendContactNotification,
-  sendAdmissionNotification
 };
