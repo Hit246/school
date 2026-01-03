@@ -76,6 +76,11 @@ const Header = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3">
+              <img 
+                src="/logo.jpg" 
+                alt="ABC Science Group Logo" 
+                className="w-12 h-12 rounded-full object-cover"
+              />
               <div>
                 <h1 className="text-xl font-heading font-bold text-gray-900">ABC Science Group</h1>
                 <p className="text-xs text-gray-600">Idar</p>
@@ -83,7 +88,7 @@ const Header = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-5">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
