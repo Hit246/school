@@ -1,32 +1,49 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from '../translations/translations';
+import { galleryAPI } from '../services/api';
 
 const Gallery = () => {
   const { language } = useLanguage();
   const t = useTranslation(language);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
   
   const categories = ['All', 'Events', 'Sports', 'Cultural', 'Infrastructure', 'Academics'];
-  
-  const images = [
-    { id: 1, category: 'Events', title: 'Annual Day 2024', description: 'Grand celebration with cultural performances' },
-    { id: 2, category: 'Sports', title: 'Sports Day', description: 'Athletic competitions and team spirit' },
-    { id: 3, category: 'Cultural', title: 'Dance Performance', description: 'Traditional dance showcase' },
-    { id: 4, category: 'Infrastructure', title: 'School Building', description: 'Modern campus architecture' },
-    { id: 5, category: 'Academics', title: 'Science Lab', description: 'Students conducting experiments' },
-    { id: 6, category: 'Events', title: 'Independence Day', description: 'Patriotic celebration' },
-    { id: 7, category: 'Sports', title: 'Cricket Match', description: 'Inter-school tournament' },
-    { id: 8, category: 'Cultural', title: 'Music Concert', description: 'Student musical performances' },
-    { id: 9, category: 'Infrastructure', title: 'Library', description: 'Well-stocked reading space' },
-    { id: 10, category: 'Academics', title: 'Classroom', description: 'Interactive learning session' },
-    { id: 11, category: 'Events', title: 'Prize Distribution', description: 'Honoring achievements' },
-    { id: 12, category: 'Sports', title: 'Basketball', description: 'Team practice session' }
-  ];
+
+  useEffect(() => {
+    loadImages();
+  }, []);
+
+  const loadImages = async () => {
+    try {
+      const data = await galleryAPI.getAll();
+      setImages(data);
+    } catch (error) {
+      console.error('Error loading gallery:', error);
+      setImages([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredImages = selectedCategory === 'All' 
     ? images 
     : images.filter(img => img.category === selectedCategory);
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl">Loading gallery...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="gallery-page">
@@ -51,7 +68,7 @@ const Gallery = () => {
                 className={`px-6 py-2 rounded-full font-semibold transition-all ${
                   selectedCategory === category
                     ? 'bg-primary text-gray-500 shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-100 text-gray-700 hover:bg-orange-50 hover:text-primary'
                 }`}
               >
                 {category}
@@ -64,50 +81,90 @@ const Gallery = () => {
       {/* Gallery Grid */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredImages.map((image) => (
-              <div 
-                key={image.id} 
-                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gradient-to-br from-gray-200 to-gray-300 aspect-square"
-              >
-                {/* Placeholder with gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  <div className="text-6xl opacity-50">
-                    {image.category === 'Events' && '🎉'}
-                    {image.category === 'Sports' && '⚽'}
-                    {image.category === 'Cultural' && '🎭'}
-                    {image.category === 'Infrastructure' && '🏫'}
-                    {image.category === 'Academics' && '📚'}
+          {filteredImages.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 text-lg">
+                {images.length === 0 
+                  ? 'No images in gallery yet. Check back soon!' 
+                  : 'No images found in this category'}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredImages.map((image) => (
+                <div 
+                  key={image._id} 
+                  className="group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 bg-white cursor-pointer"
+                  onClick={() => setSelectedImage(image)}
+                >
+                  {/* Image Container */}
+                  <div className="relative aspect-square overflow-hidden">
+                    <img 
+                      src={image.imageData} 
+                      alt={image.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    
+                    {/* Hover Overlay with Description */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                      <span className="text-xs font-semibold text-primary bg-white px-3 py-1 rounded-full mb-2 inline-block w-fit">
+                        {image.category}
+                      </span>
+                      <h3 className="text-white font-heading font-semibold text-lg mb-2">{image.title}</h3>
+                      <p className="text-gray-200 text-sm">{image.description}</p>
+                      <p className="text-white text-xs mt-2 opacity-75">Click to view full size</p>
+                    </div>
+                  </div>
+                  
+                  {/* Title and Category Below Image */}
+                  <div className="p-4">
+                    <span className="text-xs font-semibold text-primary bg-orange-50 px-3 py-1 rounded-full inline-block mb-2">
+                      {image.category}
+                    </span>
+                    <h3 className="font-heading font-semibold text-gray-900">{image.title}</h3>
                   </div>
                 </div>
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <span className="text-xs font-semibold text-orange-400 mb-2">{image.category}</span>
-                  <h3 className="text-white font-heading font-semibold text-lg mb-1">{image.title}</h3>
-                  <p className="text-gray-300 text-sm">{image.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {filteredImages.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-gray-500 text-lg">No images found in this category</p>
+              ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Note */}
-      <section className="py-12 bg-blue-50">
-        <div className="container-custom text-center">
-          <p className="text-gray-700 max-w-2xl mx-auto">
-            📸 <strong>Note:</strong> This is a demo gallery with placeholder images. 
-            The admin panel allows you to upload and manage actual school photos.
-          </p>
+      {/* Image Modal/Lightbox */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={closeModal}
+        >
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition"
+          >
+            ×
+          </button>
+          <div 
+            className="max-w-5xl max-h-[90vh] bg-white rounded-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={selectedImage.imageData} 
+              alt={selectedImage.title}
+              className="w-full h-auto max-h-[70vh] object-contain"
+            />
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-sm font-semibold text-primary bg-orange-50 px-4 py-2 rounded-full">
+                  {selectedImage.category}
+                </span>
+              </div>
+              <h2 className="text-2xl font-heading font-bold text-gray-900 mb-2">
+                {selectedImage.title}
+              </h2>
+              <p className="text-gray-700">{selectedImage.description}</p>
+            </div>
+          </div>
         </div>
-      </section>
+      )}
     </div>
   );
 };

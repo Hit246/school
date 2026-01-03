@@ -69,14 +69,6 @@ const AdminLogin = () => {
               Login to Dashboard
             </button>
           </form>
-
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <p className="text-sm text-gray-700 text-center">
-              <strong>Demo Credentials:</strong><br />
-              Username: <code className="bg-white px-2 py-1 rounded">admin</code><br />
-              Password: <code className="bg-white px-2 py-1 rounded">admin123</code>
-            </p>
-          </div>
         </div>
 
         <div className="mt-6 text-center">

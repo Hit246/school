@@ -135,4 +135,32 @@ export const admissionAPI = {
   }
 };
 
+// Gallery API
+export const galleryAPI = {
+  getAll: async () => {
+    const response = await api.get('/gallery');
+    return response.data;
+  },
+  
+  getAllAdmin: async () => {
+    const response = await api.get('/gallery/admin');
+    return response.data;
+  },
+  
+  create: async (imageData) => {
+    const response = await api.post('/gallery', imageData);
+    return response.data;
+  },
+  
+  update: async (id, imageData) => {
+    const response = await api.put(`/gallery/${id}`, imageData);
+    return response.data;
+  },
+  
+  delete: async (id) => {
+    const response = await api.delete(`/gallery/${id}`);
+    return response.data;
+  }
+};
+
 export default api;

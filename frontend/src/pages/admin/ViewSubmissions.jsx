@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { contactAPI, admissionAPI } from '../../services/api';
 
 const ViewSubmissions = () => {
   const navigate = useNavigate();
   const [submissions, setSubmissions] = useState([]);
   const [filter, setFilter] = useState('all'); // all, unread, read
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('adminLoggedIn');
@@ -15,33 +17,54 @@ const ViewSubmissions = () => {
     loadSubmissions();
   }, [navigate]);
 
-  const loadSubmissions = () => {
-    const contact = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
-    const admission = JSON.parse(localStorage.getItem('admissionSubmissions') || '[]');
-    
-    const all = [
-      ...contact.map(s => ({ ...s, type: 'Contact' })),
-      ...admission.map(s => ({ ...s, type: 'Admission' }))
-    ].sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    setSubmissions(all);
+  const loadSubmissions = async () => {
+    try {
+      const [contacts, admissions] = await Promise.all([
+        contactAPI.getAll(),
+        admissionAPI.getAll()
+      ]);
+      
+      const all = [
+        ...contacts.map(s => ({ ...s, type: 'Contact', id: s._id })),
+        ...admissions.map(s => ({ ...s, type: 'Admission', id: s._id }))
+      ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      
+      setSubmissions(all);
+    } catch (error) {
+      console.error('Error loading submissions:', error);
+      setSubmissions([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const markAsRead = (id, type) => {
-    const key = type === 'Contact' ? 'contactSubmissions' : 'admissionSubmissions';
-    const items = JSON.parse(localStorage.getItem(key) || '[]');
-    const updated = items.map(item => item.id === id ? { ...item, status: 'read' } : item);
-    localStorage.setItem(key, JSON.stringify(updated));
-    loadSubmissions();
-  };
-
-  const deleteSubmission = (id, type) => {
-    if (confirm('Are you sure you want to delete this submission?')) {
-      const key = type === 'Contact' ? 'contactSubmissions' : 'admissionSubmissions';
-      const items = JSON.parse(localStorage.getItem(key) || '[]');
-      const updated = items.filter(item => item.id !== id);
-      localStorage.setItem(key, JSON.stringify(updated));
+  const markAsRead = async (id, type) => {
+    try {
+      if (type === 'Contact') {
+        await contactAPI.update(id, { status: 'read' });
+      } else {
+        await admissionAPI.update(id, { status: 'read' });
+      }
       loadSubmissions();
+    } catch (error) {
+      console.error('Error marking as read:', error);
+      alert('Error updating submission');
+    }
+  };
+
+  const deleteSubmission = async (id, type) => {
+    if (confirm('Are you sure you want to delete this submission?')) {
+      try {
+        if (type === 'Contact') {
+          await contactAPI.delete(id);
+        } else {
+          await admissionAPI.delete(id);
+        }
+        loadSubmissions();
+      } catch (error) {
+        console.error('Error deleting submission:', error);
+        alert('Error deleting submission');
+      }
     }
   };
 
@@ -51,6 +74,14 @@ const ViewSubmissions = () => {
     if (filter === 'read') return s.status === 'read';
     return true;
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-xl">Loading submissions...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -120,7 +151,7 @@ const ViewSubmissions = () => {
                         )}
                       </div>
                       <p className="text-sm text-gray-600">
-                        📅 {new Date(submission.date).toLocaleString()}
+                        📅 {new Date(submission.createdAt).toLocaleString()}
                       </p>
                     </div>
                     <div className="flex gap-2">

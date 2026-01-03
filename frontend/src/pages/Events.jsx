@@ -1,64 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from '../translations/translations';
+import { eventsAPI } from '../services/api';
 
 const Events = () => {
   const { language } = useLanguage();
   const t = useTranslation(language);
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load events from localStorage or use default
-    const savedEvents = localStorage.getItem('schoolEvents');
-    if (savedEvents) {
-      setEvents(JSON.parse(savedEvents));
-    } else {
-      // Default events
-      const defaultEvents = [
-        {
-          id: 1,
-          title: 'Annual Day 2026',
-          date: '2026-12-15',
-          category: 'upcoming',
-          description: 'Grand annual function with cultural performances, prize distribution, and celebrations',
-          time: '10:00 AM'
-        },
-        {
-          id: 2,
-          title: 'Sports Day',
-          date: '2026-11-20',
-          category: 'upcoming',
-          description: 'Inter-house sports competitions including athletics, cricket, and football',
-          time: '8:00 AM'
-        },
-        {
-          id: 3,
-          title: 'Science Exhibition',
-          date: '2026-10-10',
-          category: 'upcoming',
-          description: 'Student projects and innovative science models on display',
-          time: '9:00 AM'
-        },
-        {
-          id: 4,
-          title: 'Independence Day Celebration',
-          date: '2025-08-15',
-          category: 'past',
-          description: 'Patriotic celebration with flag hoisting, cultural programs, and speeches',
-          time: '8:00 AM'
-        },
-        {
-          id: 5,
-          title: 'Parent-Teacher Meeting',
-          date: '2025-09-05',
-          category: 'past',
-          description: 'Discussion on student progress and academic performance',
-          time: '10:00 AM'
-        }
-      ];
-      setEvents(defaultEvents);
-    }
+    loadEvents();
   }, []);
+
+  const loadEvents = async () => {
+    try {
+      const data = await eventsAPI.getAll();
+      setEvents(data);
+    } catch (error) {
+      console.error('Error loading events:', error);
+      // If API fails, show empty state
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const upcomingEvents = events.filter(e => e.category === 'upcoming');
   const pastEvents = events.filter(e => e.category === 'past');
@@ -67,6 +33,14 @@ const Events = () => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl">Loading events...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="events-page">

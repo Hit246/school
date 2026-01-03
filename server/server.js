@@ -9,6 +9,7 @@ import eventRoutes from './routes/events.js';
 import newsRoutes from './routes/news.js';
 import contactRoutes from './routes/contacts.js';
 import admissionRoutes from './routes/admissions.js';
+import galleryRoutes from './routes/gallery.js';
 
 // Load environment variables
 dotenv.config();
@@ -20,8 +21,8 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '2mb' })); // Increased limit for base64 images
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 
 // Routes
 app.use('/api/admin', adminRoutes);
@@ -29,6 +30,7 @@ app.use('/api/events', eventRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/admissions', admissionRoutes);
+app.use('/api/gallery', galleryRoutes);
 
 // Root route
 app.get('/', (req, res) => {

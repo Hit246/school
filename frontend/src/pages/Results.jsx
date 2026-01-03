@@ -20,11 +20,8 @@ const Results = () => {
   ];
 
   const achievements = [
-    { icon: '🏆', title: 'State Level Science Olympiad', achievement: '3 Gold Medals, 5 Silver Medals', year: 2024 },
     { icon: '⚽', title: 'Inter-School Sports Championship', achievement: 'Overall Champions', year: 2024 },
-    { icon: '🎨', title: 'National Art Competition', achievement: '1st Prize in Painting', year: 2024 },
-    { icon: '💻', title: 'Coding Competition', achievement: 'Winners at State Level', year: 2024 },
-    { icon: '📚', title: 'Quiz Competition', achievement: 'Regional Champions', year: 2023 },
+    { icon: '📚', title: 'Quiz Competition', achievement: 'State Champions', year: 2023 },
     { icon: '🎭', title: 'Cultural Fest', achievement: 'Best Performance Award', year: 2023 }
   ];
 
@@ -146,7 +143,7 @@ const Results = () => {
           <div className="max-w-4xl mx-auto mt-12">
             <div className="space-y-8">
               <div className="flex gap-6 items-start">
-                <div className="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl flex-shrink-0">
+                <div className="bg-orange-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl shrink-0">
                   2024
                 </div>
                 <div className="card flex-1">
@@ -156,7 +153,7 @@ const Results = () => {
               </div>
               
               <div className="flex gap-6 items-start">
-                <div className="bg-secondary text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl flex-shrink-0">
+                <div className="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-xl shrink-0">
                   2023
                 </div>
                 <div className="card flex-1">
@@ -180,7 +177,7 @@ const Results = () => {
                   2020
                 </div>
                 <div className="card flex-1">
-                  <h3 className="font-heading font-semibold text-lg mb-2">25 Years of Excellence</h3>
+                  <h3 className="font-heading font-semibold text-lg mb-2">20 Years of Excellence</h3>
                   <p className="text-gray-600">Celebrated silver jubilee with grand alumni meet and cultural programs</p>
                 </div>
               </div>
@@ -190,10 +187,10 @@ const Results = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-gradient-to-r from-primary to-secondary text-white">
+      <section className="py-16 bg-gradient-to-r from-primary to-secondary text-gray-700">
         <div className="container-custom text-center">
           <h3 className="text-3xl font-heading font-bold mb-4">Be Part of Our Success Story</h3>
-          <p className="text-xl mb-8 text-orange-100">Join ABC Science Group and achieve your dreams</p>
+          <p className="text-xl mb-8 text-orange-600">Join ABC Science Group and achieve your dreams</p>
           <a href="/admissions" className="btn-outline border-white text-white hover:bg-white hover:text-primary text-lg">
             Apply for Admissions
           </a>

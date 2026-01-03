@@ -1,27 +1,52 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { eventsAPI, contactAPI, admissionAPI, newsAPI, galleryAPI } from '../../services/api';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const [stats, setStats] = useState([
+    { title: 'Total Events', value: 0, icon: '📅', color: 'bg-blue-500' },
+    { title: 'Gallery Images', value: 0, icon: '🖼️', color: 'bg-green-500' },
+    { title: 'News Items', value: 0, icon: '📰', color: 'bg-purple-500' },
+    { title: 'Contact Submissions', value: 0, icon: '✉️', color: 'bg-orange-500' }
+  ]);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('adminLoggedIn');
     if (!isLoggedIn) {
       navigate('/admin');
+      return;
     }
+    loadStats();
   }, [navigate]);
+
+  const loadStats = async () => {
+    try {
+      const [events, contacts, admissions, allNews, gallery] = await Promise.all([
+        eventsAPI.getAll(),
+        contactAPI.getAll(),
+        admissionAPI.getAll(),
+        newsAPI.getAll(),
+        galleryAPI.getAllAdmin()
+      ]);
+      
+      const totalSubmissions = contacts.length + admissions.length;
+      
+      setStats([
+        { title: 'Total Events', value: events.length, icon: '📅', color: 'bg-blue-500' },
+        { title: 'Gallery Images', value: gallery.length, icon: '🖼️', color: 'bg-green-500' },
+        { title: 'News Items', value: allNews.length, icon: '📰', color: 'bg-purple-500' },
+        { title: 'Contact Submissions', value: totalSubmissions, icon: '✉️', color: 'bg-orange-500' }
+      ]);
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('adminLoggedIn');
     navigate('/admin');
   };
-
-  const stats = [
-    { title: 'Total Events', value: JSON.parse(localStorage.getItem('schoolEvents') || '[]').length, icon: '📅', color: 'bg-blue-500' },
-    { title: 'Gallery Images', value: JSON.parse(localStorage.getItem('galleryImages') || '[]').length, icon: '🖼️', color: 'bg-green-500' },
-    { title: 'News Items', value: JSON.parse(localStorage.getItem('newsItems') || '[]').length, icon: '📰', color: 'bg-purple-500' },
-    { title: 'Contact Submissions', value: JSON.parse(localStorage.getItem('contactSubmissions') || '[]').length, icon: '✉️', color: 'bg-orange-500' }
-  ];
 
   const quickLinks = [
     { title: 'Manage Events', path: '/admin/events', icon: '📅', description: 'Add, edit, or delete events' },

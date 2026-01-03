@@ -2,11 +2,14 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from '../translations/translations';
+import { newsAPI } from '../services/api';
 
 const Home = () => {
   const [counters, setCounters] = useState({ years: 0, students: 0, results: 0 });
+  const [news, setNews] = useState([]);
   const { language } = useLanguage();
   const t = useTranslation(language);
+  
   // Animated counter effect
   useEffect(() => {
     const duration = 2000;
@@ -29,6 +32,24 @@ const Home = () => {
     }, interval);
 
     return () => clearInterval(timer);
+  }, []);
+
+  // Fetch latest news
+  useEffect(() => {
+    const loadNews = async () => {
+      try {
+        const allNews = await newsAPI.getAll();
+        // Get only visible news, sorted by date, limit to 3
+        const latestNews = allNews
+          .filter(item => item.visible)  // Changed from isVisible to visible
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 3);
+        setNews(latestNews);
+      } catch (error) {
+        console.error('Error loading news:', error);
+      }
+    };
+    loadNews();
   }, []);
 
   const facilities = [
@@ -145,6 +166,48 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* News & Announcements Section */}
+      {news.length > 0 && (
+        <section className="py-16 bg-gradient-to-br from-yellow-50 to-orange-50">
+          <div className="container-custom">
+            <div className="text-center mb-12">
+              <h2 className="section-title">📢 Latest News & Announcements</h2>
+              <p className="section-subtitle">Stay updated with what's happening at ABC Science Group</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {news.map((item) => (
+                <div key={item._id} className="card bg-white hover:shadow-2xl transition-all duration-300 border-l-4 border-orange-500">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="bg-orange-500 text-white rounded-full p-2 flex-shrink-0">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
+                        <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-heading font-bold text-lg text-gray-900 mb-2">{item.title}</h3>
+                      <p className="text-sm text-gray-500 mb-3">
+                        📅 {new Date(item.createdAt).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 line-clamp-3">{item.content}</p>
+                  {item.visible && (
+                    <div className="mt-4 inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+                      ✓ Active
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Value Proposition */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
