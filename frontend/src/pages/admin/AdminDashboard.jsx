@@ -121,15 +121,6 @@ const AdminDashboard = () => {
             ))}
           </div>
         </div>
-
-        {/* Info Note */}
-        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-          <h3 className="font-semibold text-yellow-900 mb-2">📌 Important Note</h3>
-          <p className="text-yellow-800 text-sm">
-            This is a demo admin panel using localStorage for data persistence. 
-            For production use, integrate with a backend API (PHP, Node.js, etc.) for secure data management.
-          </p>
-        </div>
       </div>
     </div>
   );

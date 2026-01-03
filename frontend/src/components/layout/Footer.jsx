@@ -22,9 +22,11 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-xl">
-                ABC
-              </div>
+              <img 
+                src="/logo.jpg" 
+                alt="ABC Science Group Logo" 
+                className="w-12 h-12 rounded-full object-cover"
+              />
               <div>
                 <h3 className="text-xl font-heading font-bold">ABC Science Group</h3>
                 <p className="text-sm text-gray-400">Idar</p>
