@@ -152,7 +152,7 @@ const Admissions = () => {
             <div className="card">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-primary text-white">
+                  <tr className="bg-primary text-gray-800">
                     <th className="text-left py-3 px-4 rounded-tl-lg">{t('admissions.class')}</th>
                     <th className="text-right py-3 px-4">{t('admissions.admissionFee')}</th>
                     <th className="text-right py-3 px-4">{t('admissions.annualFee')}</th>

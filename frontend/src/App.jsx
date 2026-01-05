@@ -14,6 +14,8 @@ import Events from './pages/Events';
 import Admissions from './pages/Admissions';
 import Contact from './pages/Contact';
 import Results from './pages/Results';
+import PrincipalDesk from './pages/PrincipalDesk';
+import Activities from './pages/Activities';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -33,7 +35,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/principal" element={<PrincipalDesk />} />
               <Route path="/academics" element={<Academics />} />
+              <Route path="/activities" element={<Activities />} />
               <Route path="/facilities" element={<Facilities />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/events" element={<Events />} />

@@ -20,11 +20,29 @@ const Header = () => {
 
   const navLinks = [
     { name: t('nav.home'), path: '/' },
-    { name: t('nav.about'), path: '/about' },
-    { name: t('nav.academics'), path: '/academics' },
+    { 
+      name: t('nav.about'), 
+      path: '/about',
+      subItems: [
+        { name: t('nav.aboutSchool'), path: '/about' },
+        { name: t('nav.visionMission'), path: '/about#vision' },
+        { name: t('nav.principalDesk'), path: '/principal' },
+        { name: t('nav.leadershipTeam'), path: '/about#leadership' }
+      ]
+    },
+    { 
+      name: t('nav.academics'), 
+      path: '/academics',
+      subItems: [
+        { name: t('nav.curriculum'), path: '/academics#curriculum' },
+        { name: t('nav.methodology'), path: '/academics#methodology' },
+        { name: t('nav.activities'), path: '/activities' },
+        { name: t('nav.academicCalendar'), path: '/academics#calendar' }
+      ]
+    },
     { name: t('nav.facilities'), path: '/facilities' },
     { name: t('nav.gallery'), path: '/gallery' },
-    { name: 'Results', path: '/results' },
+    { name: t('nav.results'), path: '/results' },
     { name: t('nav.events'), path: '/events' },
     { name: t('nav.admissions'), path: '/admissions' },
     { name: t('nav.contact'), path: '/contact' },
@@ -90,17 +108,42 @@ const Header = () => {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-5">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`font-medium transition-colors ${
-                    location.pathname === link.path
-                      ? 'text-primary'
-                      : 'text-gray-700 hover:text-primary'
-                  }`}
-                >
-                  {link.name}
-                </Link>
+                <div key={link.name} className="relative group">
+                  {link.subItems ? (
+                    <div className="flex items-center gap-1 cursor-pointer font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                      <Link to={link.path}>{link.name}</Link>
+                      <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                      
+                      {/* Dropdown Menu */}
+                      <div className="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        <div className="bg-white rounded-lg shadow-xl border-t-4 border-primary py-2 overflow-hidden">
+                          {link.subItems.map((subItem) => (
+                            <Link
+                              key={subItem.path}
+                              to={subItem.path}
+                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
+                            >
+                              {subItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className={`font-medium transition-colors ${
+                        location.pathname === link.path
+                          ? 'text-primary'
+                          : 'text-gray-700 hover:text-primary'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  )}
+                </div>
               ))}
               
               {/* Language Toggle */}
@@ -136,18 +179,45 @@ const Header = () => {
           {isMobileMenuOpen && (
             <div className="lg:hidden mt-4 pb-4 animate-slide-down">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block py-3 px-4 rounded-lg transition-colors ${
-                    location.pathname === link.path
-                      ? 'bg-primary text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {link.name}
-                </Link>
+                <div key={link.name}>
+                  {link.subItems ? (
+                    <div className="border-b border-gray-100 last:border-0">
+                      <div className="flex justify-between items-center py-3 px-4 text-gray-700 font-medium">
+                        <Link 
+                          to={link.path} 
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex-1"
+                        >
+                          {link.name}
+                        </Link>
+                      </div>
+                      <div className="bg-gray-50 pl-8 pr-4 py-2 space-y-2">
+                        {link.subItems.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block py-2 text-sm text-gray-600 hover:text-primary"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block py-3 px-4 rounded-lg transition-colors ${
+                        location.pathname === link.path
+                          ? 'bg-primary text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  )}
+                </div>
               ))}
               <Link
                 to="/admin"

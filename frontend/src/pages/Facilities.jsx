@@ -6,41 +6,83 @@ const Facilities = () => {
   const t = useTranslation(language);
   const facilities = [
     {
-      title: 'Modern Classrooms',
-      icon: '🏫',
-      description: 'Spacious, well-ventilated classrooms with smart boards and modern furniture',
-      features: ['Smart Boards', 'Air Conditioned', 'Ergonomic Furniture', 'Natural Lighting']
-    },
-    {
-      title: 'Science Laboratories',
+      title: t('facilities.scienceLabs'),
       icon: '🔬',
-      description: 'State-of-the-art Physics, Chemistry, and Biology labs with latest equipment',
-      features: ['Modern Equipment', 'Safety Measures', 'Practical Learning', 'Expert Supervision']
+      description: t('about.laboratoriesDesc'),
+      features: ['Physics Lab', 'Chemistry Lab', 'Biology Lab', 'Modern Equipment']
     },
     {
-      title: 'Computer Labs',
+      title: t('facilities.computerLab'),
       icon: '💻',
-      description: 'Advanced computer labs with high-speed internet and latest software',
-      features: ['Latest Computers', 'High-Speed Internet', 'Licensed Software', 'Coding Classes']
+      description: t('about.laboratoriesDesc'),
+      features: ['High-Speed Internet', 'Latest Software', 'Digital Learning', 'Coding Classes']
     },
     {
-      title: 'Sports Complex',
-      icon: '⚽',
-      description: 'Multi-purpose sports grounds for cricket, football, and athletics',
-      features: ['Cricket Ground', 'Football Field', 'Athletics Track']
+      title: t('facilities.library'),
+      icon: '📚',
+      description: t('about.libraryDesc'),
+      features: ['10,000+ Books', 'Digital Resources', 'Reading Area', 'Periodicals']
     },
     {
-      title: 'Transportation',
-      icon: '🚌',
-      description: 'Safe and reliable Van service covering wide areas',
-      features: ['Trained Drivers', 'Wide Coverage', 'Safe & Secure']
+      title: t('facilities.hugePlayGround'),
+      icon: '🏟️',
+      description: t('facilities.hugePlayGroundDesc'),
+      features: ['Cricket', 'Football', 'Volleyball', 'Athletics']
     },
+    {
+      title: t('facilities.roWater'),
+      icon: '💧',
+      description: t('facilities.roWaterDesc'),
+      features: ['Purified Water', 'Coolers', 'Regular Maintenance', 'Hygiene Checks']
+    },
+    {
+      title: t('facilities.projectorEducation'),
+      icon: '📽️',
+      description: t('facilities.projectorEducationDesc'),
+      features: ['Smart Boards', 'Audio-Visual Aids', 'Interactive Learning', 'Digital Content']
+    },
+    {
+      title: t('facilities.extraCoaching'),
+      icon: '👨‍🏫',
+      description: t('facilities.extraCoachingDesc'),
+      features: ['Remedial Classes', 'Doubt Solving', 'Personal Attention', 'Academic Support']
+    },
+    {
+      title: t('facilities.motivationalLectures'),
+      icon: '🎤',
+      description: t('facilities.motivationalLecturesDesc'),
+      features: ['Guest Speakers', 'Career Guidance', 'Personality Development', 'Success Stories']
+    },
+    {
+      title: t('facilities.weeklyTests'),
+      icon: '📝',
+      description: t('facilities.weeklyTestsDesc'),
+      features: ['Continuous Assessment', 'Progress Tracking', 'Parent Updates', 'Performance Analysis']
+    },
+    {
+      title: t('facilities.smsResults'),
+      icon: '📱',
+      description: t('facilities.smsResultsDesc'),
+      features: ['Instant Updates', 'Result Analysis', 'Attendance Alerts', 'Important Notices']
+    },
+    {
+      title: t('facilities.noTuition'),
+      icon: '✨',
+      description: t('facilities.noTuitionDesc'),
+      features: ['Comprehensive Teaching', 'Doubt Clearance', 'Concept Clarity', 'Exam Preparation']
+    },
+    {
+      title: t('facilities.hostelFacility'),
+      icon: '🏠',
+      description: t('facilities.hostelFacilityDesc'),
+      features: ['Secure Campus', 'Healthy Food', 'Study Hours', 'Recreation']
+    }
   ];
 
   return (
     <div className="facilities-page">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-20">
+      <section className="bg-linear-to-r from-green-600 to-blue-600 text-white py-20">
         <div className="container-custom text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">{t('facilities.title')}</h1>
           <p className="text-xl md:text-2xl text-green-100 max-w-3xl mx-auto">
@@ -75,7 +117,7 @@ const Facilities = () => {
       </section>
 
       {/* Infrastructure Stats */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-green-50">
+      <section className="py-20 bg-linear-to-br from-blue-50 to-green-50">
         <div className="container-custom">
           <h2 className="section-title text-center">Infrastructure at a Glance</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-5xl mx-auto">

@@ -42,7 +42,7 @@ const Academics = () => {
   return (
     <div className="academics-page">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-orange-600 text-white py-20">
+      <section className="bg-linear-to-r from-primary to-orange-600 text-white py-20">
         <div className="container-custom text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">{t('academics.title')}</h1>
           <p className="text-xl md:text-2xl text-gray-800 max-w-3xl mx-auto">
@@ -52,7 +52,7 @@ const Academics = () => {
       </section>
 
       {/* Curriculum Overview */}
-      <section className="py-20 bg-white">
+      <section id="curriculum" className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('academics.curriculum')}</h2>
           <p className="section-subtitle text-center">{t('academics.curriculumSubtitle')}</p>
@@ -96,7 +96,7 @@ const Academics = () => {
       </section>
 
       {/* Teaching Methodology */}
-      <section className="py-20 bg-white">
+      <section id="methodology" className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('academics.teachingMethodology')}</h2>
           <p className="section-subtitle text-center">{t('academics.methodologySubtitle')}</p>
@@ -113,7 +113,7 @@ const Academics = () => {
       </section>
 
       {/* Academic Calendar */}
-      <section className="py-20 bg-gray-50">
+      <section id="calendar" className="py-20 bg-gray-50">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('academics.academicCalendar')}</h2>
           <div className="max-w-4xl mx-auto mt-12">

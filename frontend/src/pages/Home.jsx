@@ -115,7 +115,7 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-linear-to-br from-blue-900 via-blue-800 to-blue-900 text-white py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')]"></div>
         </div>
@@ -123,7 +123,7 @@ const Home = () => {
         <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 leading-tight">
-              {t('home.heroTitle')} <span className="text-gradient bg-gradient-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">{t('home.heroDivine')}</span>
+              {t('home.heroTitle')} <span className="text-gradient bg-linear-to-r from-orange-400 to-yellow-300 bg-clip-text text-transparent">{t('home.heroDivine')}</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed">
               {t('home.heroSubtitle')}
@@ -150,16 +150,35 @@ const Home = () => {
       {/* Stats Section */}
       <section className="py-16 bg-white">
         <div className="container-custom">
+          {/* Three Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div className="card text-center hover:shadow-xl transition-all border-t-4 border-primary">
+              <div className="text-5xl mb-4">🎓</div>
+              <h3 className="text-xl font-heading font-bold mb-3 text-gray-900">{t('home.feature1Title')}</h3>
+              <p className="text-gray-600">{t('home.feature1Desc')}</p>
+            </div>
+            <div className="card text-center hover:shadow-xl transition-all border-t-4 border-secondary">
+              <div className="text-5xl mb-4">🚀</div>
+              <h3 className="text-xl font-heading font-bold mb-3 text-gray-900">{t('home.feature2Title')}</h3>
+              <p className="text-gray-600">{t('home.feature2Desc')}</p>
+            </div>
+            <div className="card text-center hover:shadow-xl transition-all border-t-4 border-green-500">
+              <div className="text-5xl mb-4">🌟</div>
+              <h3 className="text-xl font-heading font-bold mb-3 text-gray-900">{t('home.feature3Title')}</h3>
+              <p className="text-gray-600">{t('home.feature3Desc')}</p>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 transform hover:scale-105 transition-all duration-300">
+            <div className="text-center p-8 rounded-xl bg-linear-to-br from-orange-50 to-orange-100 transform hover:scale-105 transition-all duration-300">
               <div className="text-5xl md:text-6xl font-bold text-primary mb-2">{counters.years}+</div>
               <div className="text-xl font-semibold text-gray-700">Years of Excellence</div>
             </div>
-            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 transform hover:scale-105 transition-all duration-300">
+            <div className="text-center p-8 rounded-xl bg-linear-to-br from-blue-50 to-blue-100 transform hover:scale-105 transition-all duration-300">
               <div className="text-5xl md:text-6xl font-bold text-secondary mb-2">{counters.students}+</div>
               <div className="text-xl font-semibold text-gray-700">Happy Students</div>
             </div>
-            <div className="text-center p-8 rounded-xl bg-gradient-to-br from-green-50 to-green-100 transform hover:scale-105 transition-all duration-300">
+            <div className="text-center p-8 rounded-xl bg-linear-to-br from-green-50 to-green-100 transform hover:scale-105 transition-all duration-300">
               <div className="text-5xl md:text-6xl font-bold text-green-600 mb-2">{counters.results}%</div>
               <div className="text-xl font-semibold text-gray-700">Board Results</div>
             </div>
@@ -167,9 +186,48 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Curriculum Highlights */}
+      <section className="py-20 bg-gray-50">
+        <div className="container-custom">
+          <h2 className="section-title text-center mb-16">{t('home.curriculumHighlights')}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="card group hover:bg-primary hover:text-gray-800 transition-all duration-300">
+              <div className="text-4xl mb-4">🗣️</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-gray-800">{t('home.foreignLanguages')}</h3>
+              <p className="text-gray-600 group-hover:text-blue-500">{t('home.foreignLanguagesDesc')}</p>
+            </div>
+            <div className="card group hover:bg-secondary hover:text-gray-800 transition-all duration-300">
+              <div className="text-4xl mb-4">🎵</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-gray-800">{t('home.musicPrograms')}</h3>
+              <p className="text-gray-600 group-hover:text-orange-500">{t('home.musicProgramsDesc')}</p>
+            </div>
+            <div className="card group hover:bg-green-600 hover:text-gray-800 transition-all duration-300">
+              <div className="text-4xl mb-4">💃</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-gray-800">{t('home.danceClass')}</h3>
+              <p className="text-gray-600 group-hover:text-green-500">{t('home.danceClassDesc')}</p>
+            </div>
+            <div className="card group hover:bg-purple-600 hover:text-gray-800 transition-all duration-300">
+              <div className="text-4xl mb-4">🎨</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-gray-800">{t('home.artClasses')}</h3>
+              <p className="text-gray-600 group-hover:text-purple-500">{t('home.artClassesDesc')}</p>
+            </div>
+            <div className="card group hover:bg-red-600 hover:text-gray-800 transition-all duration-300">
+              <div className="text-4xl mb-4">⚽</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-gray-800">{t('home.sportsPrograms')}</h3>
+              <p className="text-gray-600 group-hover:text-red-500">{t('home.sportsProgramsDesc')}</p>
+            </div>
+            <div className="card group hover:bg-yellow-500 hover:text-gray-800 transition-all duration-300">
+              <div className="text-4xl mb-4">⭐</div>
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-gray-800">{t('home.giftedTalented')}</h3>
+              <p className="text-gray-600 group-hover:text-yellow-500">{t('home.giftedTalentedDesc')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* News & Announcements Section */}
       {news.length > 0 && (
-        <section className="py-16 bg-gradient-to-br from-yellow-50 to-orange-50">
+        <section className="py-16 bg-linear-to-br from-yellow-50 to-orange-50">
           <div className="container-custom">
             <div className="text-center mb-12">
               <h2 className="section-title">📢 Latest News & Announcements</h2>
@@ -179,7 +237,7 @@ const Home = () => {
               {news.map((item) => (
                 <div key={item._id} className="card bg-white hover:shadow-2xl transition-all duration-300 border-l-4 border-orange-500">
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="bg-orange-500 text-white rounded-full p-2 flex-shrink-0">
+                    <div className="bg-orange-500 text-white rounded-full p-2 shrink-0">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
                         <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
@@ -210,7 +268,7 @@ const Home = () => {
       )}
 
       {/* Value Proposition */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
+      <section className="py-20 bg-linear-to-br from-gray-50 to-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="section-title">{t('home.whyChoose')}</h2>
@@ -247,7 +305,7 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {toppers.map((topper, index) => (
-              <div key={index} className="card text-center bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-orange-200">
+              <div key={index} className="card text-center bg-linear-to-br from-yellow-50 to-orange-50 border-2 border-orange-200">
                 <div className="w-24 h-24 bg-gradient-primary rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
                   {topper.percentage}
                 </div>
@@ -269,7 +327,7 @@ const Home = () => {
       </section>
 
       {/* Facilities Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
+      <section className="py-20 bg-linear-to-br from-blue-50 to-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="section-title">{t('home.worldClassFacilities')}</h2>
@@ -301,7 +359,7 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="card bg-gradient-to-br from-gray-50 to-white">
+              <div key={index} className="card bg-linear-to-br from-gray-50 to-white">
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -321,7 +379,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-secondary text-gray-900">
+      <section className="py-20 bg-linear-to-r from-primary to-secondary text-gray-900">
         <div className="container-custom text-center">
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
             🎓 {t('home.admissionsOpenYear')}

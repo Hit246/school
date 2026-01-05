@@ -80,7 +80,7 @@ const AdminDashboard = () => {
       {/* Dashboard Content */}
       <div className="container-custom py-8">
         {/* Welcome Message */}
-        <div className="bg-gradient-to-r from-primary to-secondary text-gray-900 rounded-xl p-8 mb-8">
+        <div className="bg-linear-to-r from-primary to-secondary text-gray-900 rounded-xl p-8 mb-8">
           <h2 className="text-3xl font-heading font-bold mb-2">Welcome, Admin!</h2>
           <p className="text-gray-700">Manage your school website content from this dashboard</p>
         </div>

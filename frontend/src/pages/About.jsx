@@ -24,7 +24,7 @@ const About = () => {
   return (
     <div className="about-page">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-secondary to-blue-600 text-white py-20">
+      <section className="bg-linear-to-r from-secondary to-blue-600 text-white py-20">
         <div className="container-custom text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6 animate-fade-in">{t('about.title')}</h1>
           <p className="text-xl md:text-2xl text-gray-800 max-w-3xl mx-auto">
@@ -54,17 +54,17 @@ const About = () => {
       </section>
 
       {/* Vision & Mission */}
-      <section className="py-20 bg-gradient-to-br from-orange-50 to-blue-50">
+      <section id="vision" className="py-20 bg-linear-to-br from-orange-50 to-blue-50">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div className="card bg-gradient-to-br from-orange-500 to-orange-600 text-white p-8">
+            <div className="card bg-linear-to-br from-orange-500 to-orange-600 text-white p-8">
               <div className="text-5xl mb-4">👁️</div>
               <h3 className="text-3xl font-heading font-bold mb-4">{t('about.ourVision')}</h3>
               <p className="text-lg leading-relaxed text-orange-50">
                 {t('about.visionText')}
               </p>
             </div>
-            <div className="card bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8">
+            <div className="card bg-linear-to-br from-blue-500 to-blue-600 text-white p-8">
               <div className="text-5xl mb-4">🎯</div>
               <h3 className="text-3xl font-heading font-bold mb-4">{t('about.ourMission')}</h3>
               <p className="text-lg leading-relaxed text-blue-50">
@@ -93,7 +93,7 @@ const About = () => {
       </section>
 
       {/* Leadership Team */}
-      <section className="py-20 bg-gray-50">
+      <section id="leadership" className="py-20 bg-gray-50">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('about.leadership')}</h2>
           <p className="section-subtitle text-center">{t('about.leadershipSubtitle')}</p>
