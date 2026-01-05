@@ -7,12 +7,12 @@ const About = () => {
   const t = useTranslation(language);
 
   const values = [
-    { icon: '🎓', title: 'Excellence', description: 'Striving for the highest standards in education' },
-    { icon: '🤝', title: 'Integrity', description: 'Building character through honesty and ethics' },
-    { icon: '💡', title: 'Innovation', description: 'Embracing modern teaching methodologies' },
-    { icon: '🌱', title: 'Growth', description: 'Fostering continuous learning and development' },
-    { icon: '❤️', title: 'Compassion', description: 'Nurturing empathy and social responsibility' },
-    { icon: '🌍', title: 'Diversity', description: 'Celebrating inclusivity and cultural awareness' }
+    { icon: '🎓', title: t('about.excellence'), description: t('about.excellenceDesc') },
+    { icon: '🤝', title: t('about.integrity'), description: t('about.integrityDesc') },
+    { icon: '💡', title: t('about.innovation'), description: t('about.innovationDesc') },
+    { icon: '🌱', title: t('about.growth'), description: t('about.growthDesc') },
+    { icon: '❤️', title: t('about.compassion'), description: t('about.compassionDesc') },
+    { icon: '🌍', title: t('about.diversity'), description: t('about.diversityDesc') }
   ];
 
   const leadership = [
@@ -40,13 +40,13 @@ const About = () => {
             <h2 className="section-title text-center">{t('about.ourStory')}</h2>
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
               <p className="text-lg mb-6">
-                Founded in 1999, ABC Science Group, Idar has been at the forefront of educational excellence for over two decades. What started as a small institution with a vision to provide quality education has grown into one of the most respected schools in the region.
+                {t('about.storyPara1')}
               </p>
               <p className="text-lg mb-6">
-                Our journey has been marked by consistent academic achievements, with our students consistently securing top ranks in board examinations. We take pride in our 100% pass rate and the success stories of thousands of students who have gone on to excel in various fields.
+                {t('about.storyPara2')}
               </p>
               <p className="text-lg">
-                Today, ABC Science Group stands as a beacon of holistic education, combining academic rigor with character development, modern facilities with traditional values, and innovation with integrity.
+                {t('about.storyPara3')}
               </p>
             </div>
           </div>
@@ -59,16 +59,16 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <div className="card bg-gradient-to-br from-orange-500 to-orange-600 text-white p-8">
               <div className="text-5xl mb-4">👁️</div>
-              <h3 className="text-3xl font-heading font-bold mb-4">Our Vision</h3>
+              <h3 className="text-3xl font-heading font-bold mb-4">{t('about.ourVision')}</h3>
               <p className="text-lg leading-relaxed text-orange-50">
-                To be a leading educational institution that nurtures young minds into responsible global citizens, equipped with knowledge, skills, and values to excel in an ever-changing world while staying rooted in our cultural heritage.
+                {t('about.visionText')}
               </p>
             </div>
             <div className="card bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8">
               <div className="text-5xl mb-4">🎯</div>
-              <h3 className="text-3xl font-heading font-bold mb-4">Our Mission</h3>
+              <h3 className="text-3xl font-heading font-bold mb-4">{t('about.ourMission')}</h3>
               <p className="text-lg leading-relaxed text-blue-50">
-                To provide world-class education that fosters academic excellence, critical thinking, creativity, and character development. We are committed to creating a nurturing environment where every student can discover their potential and achieve their dreams.
+                {t('about.missionText')}
               </p>
             </div>
           </div>
@@ -79,7 +79,7 @@ const About = () => {
       <section className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('about.coreValues')}</h2>
-          <p className="section-subtitle text-center">The principles that guide everything we do</p>
+          <p className="section-subtitle text-center">{t('about.valuesSubtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {values.map((value, index) => (
               <div key={index} className="card text-center hover:shadow-2xl transition-all">
@@ -96,7 +96,7 @@ const About = () => {
       <section className="py-20 bg-gray-50">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('about.leadership')}</h2>
-          <p className="section-subtitle text-center">Experienced educators dedicated to student success</p>
+          <p className="section-subtitle text-center">{t('about.leadershipSubtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
             {leadership.map((leader, index) => (
               <div key={index} className="card text-center">
@@ -116,23 +116,23 @@ const About = () => {
       <section className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('about.infrastructure')}</h2>
-          <p className="section-subtitle text-center">Modern facilities for comprehensive learning</p>
+          <p className="section-subtitle text-center">{t('about.infrastructureSubtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-5xl mx-auto">
             <div className="card">
-              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">🏫 Campus</h3>
-              <p className="text-gray-700">Sprawling 5-acre campus with green spaces, modern buildings, and state-of-the-art facilities designed for optimal learning.</p>
+              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">🏫 {t('about.campus')}</h3>
+              <p className="text-gray-700">{t('about.campusDesc')}</p>
             </div>
             <div className="card">
-              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">🔬 Laboratories</h3>
-              <p className="text-gray-700">Fully equipped Physics, Chemistry, Biology, and Computer labs with latest equipment and technology.</p>
+              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">🔬 {t('about.laboratories')}</h3>
+              <p className="text-gray-700">{t('about.laboratoriesDesc')}</p>
             </div>
             <div className="card">
-              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">📚 Library</h3>
-              <p className="text-gray-700">Extensive collection of 10,000+ books, journals, and digital resources with comfortable reading spaces.</p>
+              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">📚 {t('about.library')}</h3>
+              <p className="text-gray-700">{t('about.libraryDesc')}</p>
             </div>
             <div className="card">
-              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">⚽ Sports Complex</h3>
-              <p className="text-gray-700">Multi-purpose sports grounds, indoor games facilities, and dedicated areas for various athletic activities.</p>
+              <h3 className="text-xl font-heading font-semibold mb-3 text-primary">⚽ {t('about.sportsComplex')}</h3>
+              <p className="text-gray-700">{t('about.sportsComplexDesc')}</p>
             </div>
           </div>
         </div>

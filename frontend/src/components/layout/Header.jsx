@@ -106,7 +106,7 @@ const Header = () => {
               {/* Language Toggle */}
               <button
                 onClick={toggleLanguage}
-                className="px-3 py-2 rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all font-semibold text-sm"
+                className="px-3 py-2 rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-gray-400 transition-all font-semibold text-sm"
                 title="Toggle Language"
               >
                 {language === 'en' ? 'ગુ' : 'EN'}

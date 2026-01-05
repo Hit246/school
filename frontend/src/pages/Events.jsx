@@ -131,16 +131,6 @@ const Events = () => {
           </div>
         </div>
       </section>
-
-      {/* Calendar Note */}
-      <section className="py-12 bg-blue-50">
-        <div className="container-custom text-center">
-          <p className="text-gray-700 max-w-2xl mx-auto">
-            📅 <strong>Note:</strong> Events are managed through the admin panel. 
-            Administrators can add, edit, and remove events as needed.
-          </p>
-        </div>
-      </section>
     </div>
   );
 };

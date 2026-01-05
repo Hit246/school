@@ -88,20 +88,20 @@ const Home = () => {
   const testimonials = [
     {
       name: 'Mrs. Priya Patel',
-      role: 'Parent',
-      text: 'ABC Science Group has transformed my child\'s learning journey. The teachers are dedicated and the facilities are excellent.',
+      role: t('home.parent'),
+      text: t('home.testimonial1'),
       rating: 5
     },
     {
       name: 'Rahul Sharma',
-      role: 'Student - Class 12',
-      text: 'The best decision I made was joining this school. The academic support and extracurricular activities are outstanding.',
+      role: `${t('home.student')} - Class 12`,
+      text: t('home.testimonial2'),
       rating: 5
     },
     {
       name: 'Mr. Amit Desai',
-      role: 'Parent',
-      text: 'Highly recommend ABC Science Group. They truly nurture minds with divine values and focus on holistic development.',
+      role: t('home.parent'),
+      text: t('home.testimonial3'),
       rating: 5
     }
   ];

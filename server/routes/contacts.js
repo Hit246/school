@@ -44,13 +44,14 @@ router.put('/:id', protect, async (req, res) => {
     const contact = await Contact.findByIdAndUpdate(
       req.params.id,
       { status: req.body.status },
-      { new: true }
+      { new: true, runValidators: true }
     );
     if (!contact) {
       return res.status(404).json({ message: 'Contact not found' });
     }
     res.json(contact);
   } catch (error) {
+    console.error('Error updating contact:', error);
     res.status(400).json({ message: error.message });
   }
 });

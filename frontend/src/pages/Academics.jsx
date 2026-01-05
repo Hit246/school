@@ -55,7 +55,7 @@ const Academics = () => {
       <section className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('academics.curriculum')}</h2>
-          <p className="section-subtitle text-center">Structured learning pathways from primary to senior secondary</p>
+          <p className="section-subtitle text-center">{t('academics.curriculumSubtitle')}</p>
           
           <div className="max-w-4xl mx-auto mt-12 space-y-4">
             {grades.map((grade, index) => (
@@ -79,7 +79,7 @@ const Academics = () => {
                 </button>
                 {expandedGrade === index && (
                   <div className="px-6 py-4 bg-white animate-slide-down">
-                    <h4 className="font-semibold text-gray-900 mb-3">Subjects Offered:</h4>
+                    <h4 className="font-semibold text-gray-900 mb-3">{t('academics.subjectsOffered')}</h4>
                     <div className="flex flex-wrap gap-2">
                       {grade.subjects.map((subject, idx) => (
                         <span key={idx} className="bg-primary text-gray-800 px-4 py-2 rounded-full text-sm">
@@ -98,8 +98,8 @@ const Academics = () => {
       {/* Teaching Methodology */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <h2 className="section-title text-center">Our Teaching Methodology</h2>
-          <p className="section-subtitle text-center">Modern approaches for effective learning</p>
+          <h2 className="section-title text-center">{t('academics.teachingMethodology')}</h2>
+          <p className="section-subtitle text-center">{t('academics.methodologySubtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {methodology.map((method, index) => (
               <div key={index} className="card text-center hover:shadow-2xl transition-all">
@@ -115,33 +115,33 @@ const Academics = () => {
       {/* Academic Calendar */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom">
-          <h2 className="section-title text-center">Academic Calendar 2026-27</h2>
+          <h2 className="section-title text-center">{t('academics.academicCalendar')}</h2>
           <div className="max-w-4xl mx-auto mt-12">
             <div className="card">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="border-l-4 border-primary pl-4">
-                  <h3 className="font-heading font-semibold text-lg mb-2">📅 Session Start</h3>
-                  <p className="text-gray-700">April 1, 2026</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">📅 {t('academics.sessionStarts')}</h3>
+                  <p className="text-gray-700">{t('academics.sessionStartsDate')}</p>
                 </div>
                 <div className="border-l-4 border-secondary pl-4">
                   <h3 className="font-heading font-semibold text-lg mb-2">🏖️ Summer Vacation</h3>
                   <p className="text-gray-700">May 15 - June 15, 2026</p>
                 </div>
                 <div className="border-l-4 border-green-500 pl-4">
-                  <h3 className="font-heading font-semibold text-lg mb-2">📝 Mid-Term Exams</h3>
-                  <p className="text-gray-700">September 2026</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">📝 {t('academics.midTermExams')}</h3>
+                  <p className="text-gray-700">{t('academics.midTermExamsDate')}</p>
                 </div>
                 <div className="border-l-4 border-orange-500 pl-4">
-                  <h3 className="font-heading font-semibold text-lg mb-2">🎄 Winter Break</h3>
-                  <p className="text-gray-700">December 25 - January 5</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">🎄 {t('academics.winterBreak')}</h3>
+                  <p className="text-gray-700">{t('academics.winterBreakDate')}</p>
                 </div>
                 <div className="border-l-4 border-purple-500 pl-4">
-                  <h3 className="font-heading font-semibold text-lg mb-2">📚 Final Exams</h3>
-                  <p className="text-gray-700">February - March 2027</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">📚 {t('academics.finalExams')}</h3>
+                  <p className="text-gray-700">{t('academics.finalExamsDate')}</p>
                 </div>
                 <div className="border-l-4 border-red-500 pl-4">
-                  <h3 className="font-heading font-semibold text-lg mb-2">🎓 Session End</h3>
-                  <p className="text-gray-700">March 31, 2027</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">🎓 {t('academics.sessionEnds')}</h3>
+                  <p className="text-gray-700">{t('academics.sessionEndsDate')}</p>
                 </div>
               </div>
             </div>

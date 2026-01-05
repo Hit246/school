@@ -82,7 +82,7 @@ const Admissions = () => {
       <section className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('admissions.admissionProcess')}</h2>
-          <p className="section-subtitle text-center">Simple and transparent admission procedure</p>
+          <p className="section-subtitle text-center">{t('admissions.processSubtitle')}</p>
           
           <div className="max-w-5xl mx-auto mt-12">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -110,32 +110,32 @@ const Admissions = () => {
       {/* Eligibility */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom">
-          <h2 className="section-title text-center">Eligibility Criteria</h2>
+          <h2 className="section-title text-center">{t('admissions.eligibilityCriteria')}</h2>
           <div className="max-w-3xl mx-auto mt-12">
             <div className="card">
               <table className="w-full">
                 <thead>
                   <tr className="border-b-2 border-gray-200">
-                    <th className="text-left py-3 px-4 font-heading">Class</th>
-                    <th className="text-left py-3 px-4 font-heading">Age Criteria</th>
+                    <th className="text-left py-3 px-4 font-heading">{t('admissions.class')}</th>
+                    <th className="text-left py-3 px-4 font-heading">{t('admissions.ageRequirement')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-100">
-                    <td className="py-3 px-4">Nursery</td>
+                    <td className="py-3 px-4">{t('admissions.nursery')}</td>
                     <td className="py-3 px-4">3+ years as on 31st March</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="py-3 px-4">Class 1</td>
+                    <td className="py-3 px-4">{t('admissions.class1')}</td>
                     <td className="py-3 px-4">6+ years as on 31st March</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="py-3 px-4">Class 2-10</td>
+                    <td className="py-3 px-4">{t('admissions.class2to10')}</td>
                     <td className="py-3 px-4">As per previous class completion</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4">Class 11</td>
-                    <td className="py-3 px-4">Passed Class 10 with required percentage</td>
+                    <td className="py-3 px-4">{t('admissions.class11')}</td>
+                    <td className="py-3 px-4">{t('admissions.passedClass10')}</td>
                   </tr>
                 </tbody>
               </table>
@@ -153,33 +153,33 @@ const Admissions = () => {
               <table className="w-full">
                 <thead>
                   <tr className="bg-primary text-white">
-                    <th className="text-left py-3 px-4 rounded-tl-lg">Class</th>
-                    <th className="text-right py-3 px-4">Admission Fee</th>
-                    <th className="text-right py-3 px-4">Annual Fee</th>
-                    <th className="text-right py-3 px-4 rounded-tr-lg">Total</th>
+                    <th className="text-left py-3 px-4 rounded-tl-lg">{t('admissions.class')}</th>
+                    <th className="text-right py-3 px-4">{t('admissions.admissionFee')}</th>
+                    <th className="text-right py-3 px-4">{t('admissions.annualFee')}</th>
+                    <th className="text-right py-3 px-4 rounded-tr-lg">{t('admissions.total')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-100">
-                    <td className="py-3 px-4">Nursery - Class 5</td>
+                    <td className="py-3 px-4">{t('admissions.nurseryTo5')}</td>
                     <td className="py-3 px-4 text-right">₹5,000</td>
                     <td className="py-3 px-4 text-right">₹25,000</td>
                     <td className="py-3 px-4 text-right font-semibold">₹30,000</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="py-3 px-4">Class 6 - 8</td>
+                    <td className="py-3 px-4">{t('admissions.class6to8')}</td>
                     <td className="py-3 px-4 text-right">₹5,000</td>
                     <td className="py-3 px-4 text-right">₹30,000</td>
                     <td className="py-3 px-4 text-right font-semibold">₹35,000</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="py-3 px-4">Class 9 - 10</td>
+                    <td className="py-3 px-4">{t('admissions.class9to10')}</td>
                     <td className="py-3 px-4 text-right">₹5,000</td>
                     <td className="py-3 px-4 text-right">₹35,000</td>
                     <td className="py-3 px-4 text-right font-semibold">₹40,000</td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-4">Class 11 - 12</td>
+                    <td className="py-3 px-4">{t('admissions.class11to12')}</td>
                     <td className="py-3 px-4 text-right">₹5,000</td>
                     <td className="py-3 px-4 text-right">₹40,000</td>
                     <td className="py-3 px-4 text-right font-semibold">₹45,000</td>
@@ -220,7 +220,7 @@ const Admissions = () => {
       <section className="py-20 bg-white">
         <div className="container-custom">
           <h2 className="section-title text-center">{t('admissions.onlineAdmissionForm')}</h2>
-          <p className="section-subtitle text-center">Fill out the form below to start your admission process</p>
+          <p className="section-subtitle text-center">{t('admissions.fillFormBelow')}</p>
           
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto mt-12">
             <div className="card">
@@ -360,14 +360,14 @@ const Admissions = () => {
       {/* Contact for Admissions */}
       <section className="py-12 bg-primary text-gray-800">
         <div className="container-custom text-center">
-          <h3 className="text-2xl font-heading font-bold mb-4">Need Help with Admissions?</h3>
-          <p className="mb-6">Contact our admission office for any queries</p>
+          <h3 className="text-2xl font-heading font-bold mb-4">{t('admissions.needHelp')}</h3>
+          <p className="mb-6">{t('admissions.contactAdmissionOffice')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:+919876543210" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-              📞 Call: +91 98765 43210
+            <a href="tel:+919725072765" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+              📞 Call: +91 97250 72765
             </a>
-            <a href="mailto:admissions@abcsciencegroup.com" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-              ✉️ Email: admissions@abcsciencegroup.com
+            <a href="mailto:abcscience2015@gmail.com" className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+              ✉️ Email: abcscience2015@gmail.com
             </a>
           </div>
         </div>

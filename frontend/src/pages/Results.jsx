@@ -40,19 +40,19 @@ const Results = () => {
       {/* Board Results */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <h2 className="section-title text-center">Board Examination Results</h2>
-          <p className="section-subtitle text-center">Consistent 100% pass rate with exceptional performance</p>
+          <h2 className="section-title text-center">{t('results.boardResults')}</h2>
+          <p className="section-subtitle text-center">{t('results.consistentResults')}</p>
           
           <div className="max-w-5xl mx-auto mt-12">
             <div className="card overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="bg-gradient-primary text-white">
-                    <th className="py-4 px-6 text-left rounded-tl-lg">Year</th>
-                    <th className="py-4 px-6 text-left">Class</th>
-                    <th className="py-4 px-6 text-center">Pass %</th>
-                    <th className="py-4 px-6 text-center">Distinction %</th>
-                    <th className="py-4 px-6 text-center rounded-tr-lg">First Class %</th>
+                    <th className="py-4 px-6 text-left rounded-tl-lg">{t('results.year')}</th>
+                    <th className="py-4 px-6 text-left">{t('results.class')}</th>
+                    <th className="py-4 px-6 text-center">{t('results.passPercentage')}</th>
+                    <th className="py-4 px-6 text-center">{t('results.distinction')}</th>
+                    <th className="py-4 px-6 text-center rounded-tr-lg">{t('results.firstClass')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,8 +87,8 @@ const Results = () => {
       {/* Toppers Showcase */}
       <section className="py-20 bg-gradient-to-br from-yellow-50 to-orange-50">
         <div className="container-custom">
-          <h2 className="section-title text-center">Our Star Performers 2024</h2>
-          <p className="section-subtitle text-center">Honoring excellence and dedication</p>
+          <h2 className="section-title text-center">{t('results.ourToppers')}</h2>
+          <p className="section-subtitle text-center">{t('results.honoringExcellence')}</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {toppers.map((topper, index) => (
@@ -109,7 +109,7 @@ const Results = () => {
                 <p className="text-primary font-semibold mb-1">{topper.class}</p>
                 <p className="text-gray-600 text-sm mb-3">{topper.subjects}</p>
                 <div className="inline-block bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full text-sm font-semibold">
-                  🏆 Board Topper {topper.year}
+                  🏆 {t('results.boardTopper')} {topper.year}
                 </div>
               </div>
             ))}
@@ -120,8 +120,8 @@ const Results = () => {
       {/* Other Achievements */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <h2 className="section-title text-center">Beyond Academics</h2>
-          <p className="section-subtitle text-center">Excellence in sports, arts, and cultural activities</p>
+          <h2 className="section-title text-center">{t('results.beyondAcademics')}</h2>
+          <p className="section-subtitle text-center">{t('results.excellenceInSports')}</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {achievements.map((achievement, index) => (
@@ -139,7 +139,7 @@ const Results = () => {
       {/* Academic Excellence Timeline */}
       <section className="py-20 bg-gray-50">
         <div className="container-custom">
-          <h2 className="section-title text-center">Journey of Excellence</h2>
+          <h2 className="section-title text-center">{t('results.journeyOfExcellence')}</h2>
           <div className="max-w-4xl mx-auto mt-12">
             <div className="space-y-8">
               <div className="flex gap-6 items-start">
@@ -147,8 +147,8 @@ const Results = () => {
                   2024
                 </div>
                 <div className="card flex-1">
-                  <h3 className="font-heading font-semibold text-lg mb-2">100% Board Results</h3>
-                  <p className="text-gray-600">Achieved 100% pass rate in both Class 10 and 12 with record number of distinctions</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">{t('results.hundredPercentResults')}</h3>
+                  <p className="text-gray-600">{t('results.achievedHundredPercent')}</p>
                 </div>
               </div>
               
@@ -157,8 +157,8 @@ const Results = () => {
                   2023
                 </div>
                 <div className="card flex-1">
-                  <h3 className="font-heading font-semibold text-lg mb-2">State Level Recognition</h3>
-                  <p className="text-gray-600">Recognized as one of the top schools in Gujarat for academic performance</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">{t('results.stateLevelRecognition')}</h3>
+                  <p className="text-gray-600">{t('results.recognizedTopSchool')}</p>
                 </div>
               </div>
               
@@ -167,8 +167,8 @@ const Results = () => {
                   2022
                 </div>
                 <div className="card flex-1">
-                  <h3 className="font-heading font-semibold text-lg mb-2">Infrastructure Upgrade</h3>
-                  <p className="text-gray-600">Inaugurated new science labs and smart classrooms</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">{t('results.infrastructureUpgrade')}</h3>
+                  <p className="text-gray-600">{t('results.inauguratedNewLabs')}</p>
                 </div>
               </div>
               
@@ -177,8 +177,8 @@ const Results = () => {
                   2020
                 </div>
                 <div className="card flex-1">
-                  <h3 className="font-heading font-semibold text-lg mb-2">20 Years of Excellence</h3>
-                  <p className="text-gray-600">Celebrated silver jubilee with grand alumni meet and cultural programs</p>
+                  <h3 className="font-heading font-semibold text-lg mb-2">{t('results.yearsOfExcellence')}</h3>
+                  <p className="text-gray-600">{t('results.celebratedSilverJubilee')}</p>
                 </div>
               </div>
             </div>
@@ -189,10 +189,10 @@ const Results = () => {
       {/* CTA */}
       <section className="py-16 bg-gradient-to-r from-primary to-secondary text-gray-700">
         <div className="container-custom text-center">
-          <h3 className="text-3xl font-heading font-bold mb-4">Be Part of Our Success Story</h3>
-          <p className="text-xl mb-8 text-orange-600">Join ABC Science Group and achieve your dreams</p>
+          <h3 className="text-3xl font-heading font-bold mb-4">{t('results.bePartOfSuccess')}</h3>
+          <p className="text-xl mb-8 text-orange-600">{t('results.joinABC')}</p>
           <a href="/admissions" className="btn-outline border-white text-white hover:bg-white hover:text-primary text-lg">
-            Apply for Admissions
+            {t('results.applyForAdmissions')}
           </a>
         </div>
       </section>

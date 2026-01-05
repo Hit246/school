@@ -44,13 +44,14 @@ router.put('/:id', protect, async (req, res) => {
     const admission = await Admission.findByIdAndUpdate(
       req.params.id,
       { status: req.body.status },
-      { new: true }
+      { new: true, runValidators: true }
     );
     if (!admission) {
       return res.status(404).json({ message: 'Admission not found' });
     }
     res.json(admission);
   } catch (error) {
+    console.error('Error updating admission:', error);
     res.status(400).json({ message: error.message });
   }
 });

@@ -41,9 +41,9 @@ const ViewSubmissions = () => {
   const markAsRead = async (id, type) => {
     try {
       if (type === 'Contact') {
-        await contactAPI.update(id, { status: 'read' });
+        await contactAPI.updateStatus(id, 'read');
       } else {
-        await admissionAPI.update(id, { status: 'read' });
+        await admissionAPI.updateStatus(id, 'reviewed');
       }
       loadSubmissions();
     } catch (error) {
@@ -70,8 +70,8 @@ const ViewSubmissions = () => {
 
   const filteredSubmissions = submissions.filter(s => {
     if (filter === 'all') return true;
-    if (filter === 'unread') return s.status === 'unread';
-    if (filter === 'read') return s.status === 'read';
+    if (filter === 'unread') return s.status === 'unread' || s.status === 'pending';
+    if (filter === 'read') return s.status === 'read' || s.status === 'reviewed';
     return true;
   });
 
