@@ -148,6 +148,91 @@ const Academics = () => {
           </div>
         </div>
       </section>
+
+      {/* Activities Section */}
+      <section id="activities" className="py-20 bg-gray-50">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <h2 className="section-title">{t('activities.title')}</h2>
+            <p className="section-subtitle">{t('activities.subtitle')}</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { icon: '🏏', title: t('activities.cricket'), description: t('activities.cricketDesc') },
+              { icon: '🧘', title: t('activities.yoga'), description: t('activities.yogaDesc') },
+              { icon: '🌳', title: t('activities.outdoor'), description: t('activities.outdoorDesc') },
+              { icon: '🎨', title: t('activities.art'), description: t('activities.artDesc') },
+              { icon: '🚌', title: t('activities.fieldTrip'), description: t('activities.fieldTripDesc') },
+              { icon: '⛸️', title: t('activities.skating'), description: t('activities.skatingDesc') },
+              { icon: '🏃', title: t('activities.athletics'), description: t('activities.athleticsDesc') },
+              { icon: '🎭', title: t('activities.cultural'), description: t('activities.culturalDesc') }
+            ].map((activity, index) => (
+              <div 
+                key={index} 
+                className="card hover:shadow-2xl transition-all duration-300 group"
+              >
+                <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
+                  {activity.icon}
+                </div>
+                <h3 className="text-2xl font-heading font-bold mb-4 text-gray-900">
+                  {activity.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {activity.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Benefits */}
+          <div className="max-w-4xl mx-auto mt-16">
+            <h3 className="text-3xl font-heading font-bold text-center mb-12">{t('activities.benefitsTitle')}</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-4">
+                <div className="shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-2xl">
+                  ✓
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold text-lg mb-2">{t('activities.benefit1')}</h4>
+                  <p className="text-gray-600">{t('activities.benefit1Desc')}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-2xl">
+                  ✓
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold text-lg mb-2">{t('activities.benefit2')}</h4>
+                  <p className="text-gray-600">{t('activities.benefit2Desc')}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-2xl">
+                  ✓
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold text-lg mb-2">{t('activities.benefit3')}</h4>
+                  <p className="text-gray-600">{t('activities.benefit3Desc')}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <div className="shrink-0 w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 text-2xl">
+                  ✓
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold text-lg mb-2">{t('activities.benefit4')}</h4>
+                  <p className="text-gray-600">{t('activities.benefit4Desc')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

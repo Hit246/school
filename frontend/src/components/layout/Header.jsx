@@ -6,6 +6,7 @@ import { useTranslation } from '../../translations/translations';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openMobileSubmenu, setOpenMobileSubmenu] = useState(null);
   const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
   const t = useTranslation(language);
@@ -18,6 +19,31 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  // Handle anchor link navigation
+  const handleAnchorClick = (e, path) => {
+    if (path.includes('#')) {
+      e.preventDefault();
+      const [route, hash] = path.split('#');
+      
+      // If we're already on the route, just scroll to the element
+      if (location.pathname === route) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        // Navigate to the route first, then scroll
+        window.location.href = path;
+      }
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   const navLinks = [
     { name: t('nav.home'), path: '/' },
     { 
@@ -26,7 +52,7 @@ const Header = () => {
       subItems: [
         { name: t('nav.aboutSchool'), path: '/about' },
         { name: t('nav.visionMission'), path: '/about#vision' },
-        { name: t('nav.principalDesk'), path: '/principal' },
+        { name: t('nav.principalDesk'), path: '/about#principal' },
         { name: t('nav.leadershipTeam'), path: '/about#leadership' }
       ]
     },
@@ -36,7 +62,7 @@ const Header = () => {
       subItems: [
         { name: t('nav.curriculum'), path: '/academics#curriculum' },
         { name: t('nav.methodology'), path: '/academics#methodology' },
-        { name: t('nav.activities'), path: '/activities' },
+        { name: t('nav.activities'), path: '/academics#activities' },
         { name: t('nav.academicCalendar'), path: '/academics#calendar' }
       ]
     },
@@ -58,7 +84,7 @@ const Header = () => {
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
-              +91 972 507 2765
+              +91 9725072765
             </a>
             <a href="mailto:abcscience2015@gmail.com" className="flex items-center gap-2 hover:text-gray-200 transition">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -123,6 +149,7 @@ const Header = () => {
                             <Link
                               key={subItem.path}
                               to={subItem.path}
+                              onClick={(e) => handleAnchorClick(e, subItem.path)}
                               className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
                             >
                               {subItem.name}
@@ -177,32 +204,43 @@ const Header = () => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden mt-4 pb-4 animate-slide-down">
+            <div className="lg:hidden mt-4 pb-4 animate-slide-down max-h-[calc(100vh-120px)] overflow-y-auto">
               {navLinks.map((link) => (
                 <div key={link.name}>
                   {link.subItems ? (
                     <div className="border-b border-gray-100 last:border-0">
-                      <div className="flex justify-between items-center py-3 px-4 text-gray-700 font-medium">
-                        <Link 
-                          to={link.path} 
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="flex-1"
+                      <div 
+                        className="flex justify-between items-center py-3 px-4 text-gray-700 font-medium cursor-pointer hover:bg-gray-50"
+                        onClick={() => setOpenMobileSubmenu(openMobileSubmenu === link.name ? null : link.name)}
+                      >
+                        <span>{link.name}</span>
+                        <svg 
+                          className={`w-5 h-5 transition-transform duration-200 ${openMobileSubmenu === link.name ? 'rotate-180' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
                         >
-                          {link.name}
-                        </Link>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
                       </div>
-                      <div className="bg-gray-50 pl-8 pr-4 py-2 space-y-2">
-                        {link.subItems.map((subItem) => (
-                          <Link
-                            key={subItem.path}
-                            to={subItem.path}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="block py-2 text-sm text-gray-600 hover:text-primary"
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
+                      {openMobileSubmenu === link.name && (
+                        <div className="bg-gray-50 pl-8 pr-4 py-2 space-y-2">
+                          {link.subItems.map((subItem) => (
+                            <Link
+                              key={subItem.path}
+                              to={subItem.path}
+                              onClick={(e) => {
+                                handleAnchorClick(e, subItem.path);
+                                setIsMobileMenuOpen(false);
+                                setOpenMobileSubmenu(null);
+                              }}
+                              className="block py-2 text-sm text-gray-600 hover:text-primary"
+                            >
+                              {subItem.name}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <Link
@@ -219,12 +257,24 @@ const Header = () => {
                   )}
                 </div>
               ))}
+              
+              {/* Language Toggle - Mobile */}
+              <div className="mt-4 px-4">
+                <button
+                  onClick={toggleLanguage}
+                  className="w-full px-4 py-3 rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all font-semibold"
+                >
+                  {language === 'en' ? 'ગુજરાતી' : 'English'}
+                </button>
+              </div>
+              
+              {/* Admin Login - Mobile */}
               <Link
                 to="/admin"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block mt-4 text-center btn-primary"
+                className="block mt-4 mx-4 text-center btn-primary"
               >
-                Admin Login
+                {t('nav.adminLogin')}
               </Link>
             </div>
           )}
