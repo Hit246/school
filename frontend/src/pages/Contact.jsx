@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { contactAPI } from '../services/api';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from '../translations/translations';
+import { useToast } from '../hooks/useToast';
+import Toast from '../components/common/Toast';
 
 const Contact = () => {
   const { language } = useLanguage();
   const t = useTranslation(language);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,11 +26,11 @@ const Contact = () => {
     
     try {
       await contactAPI.submit(formData);
-      alert(t('contact.successMessage'));
+      showToast(t('contact.successMessage'), 'success');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch (error) {
       console.error('Error submitting contact form:', error);
-      alert(t('contact.errorMessage'));
+      showToast(t('contact.errorMessage'), 'error');
     }
   };
 
@@ -237,6 +240,16 @@ const Contact = () => {
           ></iframe>
         </div>
       </section>
+      
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          duration={toast.duration}
+        />
+      )}
     </div>
   );
 };

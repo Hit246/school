@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { admissionAPI } from '../services/api';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useTranslation } from '../translations/translations';
+import { useToast } from '../hooks/useToast';
+import Toast from '../components/common/Toast';
 
 const Admissions = () => {
   const { language } = useLanguage();
   const t = useTranslation(language);
+  const { toast, showToast, hideToast } = useToast();
   const [formData, setFormData] = useState({
     studentName: '',
     dob: '',
@@ -27,7 +30,7 @@ const Admissions = () => {
     
     try {
       await admissionAPI.submit(formData);
-      alert('Application submitted successfully! We will contact you soon.');
+      showToast('Application submitted successfully! We will contact you soon.', 'success');
       setFormData({
         studentName: '',
         dob: '',
@@ -41,7 +44,7 @@ const Admissions = () => {
       });
     } catch (error) {
       console.error('Error submitting admission form:', error);
-      alert('There was an error submitting your application. Please try again.');
+      showToast('There was an error submitting your application. Please try again.', 'error');
     }
   };
 
@@ -372,6 +375,16 @@ const Admissions = () => {
           </div>
         </div>
       </section>
+      
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          duration={toast.duration}
+        />
+      )}
     </div>
   );
 };

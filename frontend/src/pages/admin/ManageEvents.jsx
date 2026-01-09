@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { eventsAPI } from '../../services/api';
+import { useToast } from '../../hooks/useToast';
+import Toast from '../../components/common/Toast';
 
 const ManageEvents = () => {
   const navigate = useNavigate();
@@ -10,11 +12,14 @@ const ManageEvents = () => {
   const [currentEvent, setCurrentEvent] = useState({
     _id: null,
     title: '',
+    description: '',
     date: '',
-    time: '',
-    category: 'upcoming',
-    description: ''
+    location: '',
+    category: 'Academic'
   });
+  const { toast, showToast, hideToast} = useToast();
+
+  const categories = ['Academic', 'Sports', 'Cultural', 'Other'];
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('adminLoggedIn');
@@ -31,7 +36,7 @@ const ManageEvents = () => {
       setEvents(data);
     } catch (error) {
       console.error('Error loading events:', error);
-      alert('Error loading events');
+      showToast('Error loading events', 'error');
     } finally {
       setLoading(false);
     }
@@ -39,20 +44,19 @@ const ManageEvents = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
       if (isEditing) {
         await eventsAPI.update(currentEvent._id, currentEvent);
-        alert('Event updated successfully!');
+        showToast('Event updated successfully!', 'success');
       } else {
         await eventsAPI.create(currentEvent);
-        alert('Event added successfully!');
+        showToast('Event added successfully!', 'success');
       }
       loadEvents();
       resetForm();
     } catch (error) {
       console.error('Error saving event:', error);
-      alert('Error saving event');
+      showToast('Error saving event', 'error');
     }
   };
 
@@ -63,20 +67,27 @@ const ManageEvents = () => {
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Are you sure you want to delete this event?')) {
+    if (window.confirm('Are you sure you want to delete this event?')) {
       try {
         await eventsAPI.delete(id);
-        alert('Event deleted successfully!');
+        showToast('Event deleted successfully!', 'success');
         loadEvents();
       } catch (error) {
         console.error('Error deleting event:', error);
-        alert('Error deleting event');
+        showToast('Error deleting event', 'error');
       }
     }
   };
 
   const resetForm = () => {
-    setCurrentEvent({ _id: null, title: '', date: '', time: '', category: 'upcoming', description: '' });
+    setCurrentEvent({
+      _id: null,
+      title: '',
+      description: '',
+      date: '',
+      location: '',
+      category: 'Academic'
+    });
     setIsEditing(false);
   };
 
@@ -109,7 +120,7 @@ const ManageEvents = () => {
               </h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold mb-2">Event Title *</label>
+                  <label className="block text-sm font-semibold mb-2">Title *</label>
                   <input
                     type="text"
                     value={currentEvent.title}
@@ -119,21 +130,31 @@ const ManageEvents = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-semibold mb-2">Description *</label>
+                  <textarea
+                    value={currentEvent.description}
+                    onChange={(e) => setCurrentEvent({ ...currentEvent, description: e.target.value })}
+                    required
+                    rows="4"
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
+                  ></textarea>
+                </div>
+                <div>
                   <label className="block text-sm font-semibold mb-2">Date *</label>
                   <input
                     type="date"
-                    value={currentEvent.date ? currentEvent.date.split('T')[0] : ''}
+                    value={currentEvent.date}
                     onChange={(e) => setCurrentEvent({ ...currentEvent, date: e.target.value })}
                     required
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold mb-2">Time *</label>
+                  <label className="block text-sm font-semibold mb-2">Location *</label>
                   <input
-                    type="time"
-                    value={currentEvent.time}
-                    onChange={(e) => setCurrentEvent({ ...currentEvent, time: e.target.value })}
+                    type="text"
+                    value={currentEvent.location}
+                    onChange={(e) => setCurrentEvent({ ...currentEvent, location: e.target.value })}
                     required
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
                   />
@@ -145,19 +166,10 @@ const ManageEvents = () => {
                     onChange={(e) => setCurrentEvent({ ...currentEvent, category: e.target.value })}
                     className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
                   >
-                    <option value="upcoming">Upcoming</option>
-                    <option value="past">Past</option>
+                    {categories.map(cat => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
                   </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold mb-2">Description *</label>
-                  <textarea
-                    value={currentEvent.description}
-                    onChange={(e) => setCurrentEvent({ ...currentEvent, description: e.target.value })}
-                    required
-                    rows="4"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
-                  ></textarea>
                 </div>
                 <div className="flex gap-2">
                   <button type="submit" className="flex-1 btn-primary">
@@ -184,29 +196,26 @@ const ManageEvents = () => {
                   {events.map((event) => (
                     <div key={event._id} className="border-2 border-gray-200 rounded-lg p-4 hover:border-primary transition">
                       <div className="flex justify-between items-start mb-2">
-                        <div>
+                        <div className="flex-1">
                           <h3 className="font-heading font-semibold text-lg">{event.title}</h3>
-                          <p className="text-sm text-gray-600">
-                            📅 {new Date(event.date).toLocaleDateString()} • 🕐 {event.time}
-                          </p>
+                          <p className="text-sm text-gray-600">{event.category}</p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          event.category === 'upcoming' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {event.category}
+                        <span className="px-3 py-1 bg-primary text-white rounded-full text-xs font-semibold">
+                          {new Date(event.date).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-gray-700 mb-3">{event.description}</p>
+                      <p className="text-gray-700 text-sm mb-2">{event.description}</p>
+                      <p className="text-gray-600 text-sm mb-3">📍 {event.location}</p>
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEdit(event)}
-                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
+                          className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(event._id)}
-                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+                          className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
                         >
                           Delete
                         </button>
@@ -219,6 +228,16 @@ const ManageEvents = () => {
           </div>
         </div>
       </div>
+      
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          duration={toast.duration}
+        />
+      )}
     </div>
   );
 };

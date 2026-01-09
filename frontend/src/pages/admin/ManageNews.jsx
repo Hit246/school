@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { newsAPI } from '../../services/api';
+import { useToast } from '../../hooks/useToast';
+import Toast from '../../components/common/Toast';
 
 const ManageNews = () => {
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ const ManageNews = () => {
     date: new Date().toISOString().split('T')[0],
     visible: true
   });
+  const { toast, showToast, hideToast } = useToast();
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('adminLoggedIn');
@@ -30,7 +33,7 @@ const ManageNews = () => {
       setNews(data);
     } catch (error) {
       console.error('Error loading news:', error);
-      alert('Error loading news');
+      showToast('Error loading news', 'error');
     } finally {
       setLoading(false);
     }
@@ -42,16 +45,16 @@ const ManageNews = () => {
     try {
       if (isEditing) {
         await newsAPI.update(currentNews._id, currentNews);
-        alert('News updated successfully!');
+        showToast('News updated successfully!', 'success');
       } else {
         await newsAPI.create(currentNews);
-        alert('News added successfully!');
+        showToast('News added successfully!', 'success');
       }
       loadNews();
       resetForm();
     } catch (error) {
       console.error('Error saving news:', error);
-      alert('Error saving news');
+      showToast('Error saving news', 'error');
     }
   };
 
@@ -65,14 +68,14 @@ const ManageNews = () => {
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Are you sure you want to delete this news item?')) {
+    if (window.confirm('Are you sure you want to delete this news item?')) {
       try {
         await newsAPI.delete(id);
-        alert('News deleted successfully!');
+        showToast('News deleted successfully!', 'success');
         loadNews();
       } catch (error) {
         console.error('Error deleting news:', error);
-        alert('Error deleting news');
+        showToast('Error deleting news', 'error');
       }
     }
   };
@@ -83,7 +86,7 @@ const ManageNews = () => {
       loadNews();
     } catch (error) {
       console.error('Error toggling visibility:', error);
-      alert('Error updating visibility');
+      showToast('Error updating visibility', 'error');
     }
   };
 
@@ -225,6 +228,15 @@ const ManageNews = () => {
           </div>
         </div>
       </div>
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          duration={toast.duration}
+        />
+      )}
     </div>
   );
 };

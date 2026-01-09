@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { contactAPI, admissionAPI } from '../../services/api';
+import { useToast } from '../../hooks/useToast';
+import Toast from '../../components/common/Toast';
 
 const ViewSubmissions = () => {
   const navigate = useNavigate();
   const [submissions, setSubmissions] = useState([]);
-  const [filter, setFilter] = useState('all'); // all, unread, read
+  const [filterStatus, setFilterStatus] = useState('all'); // all, unread, read
+  const { toast, showToast, hideToast } = useToast();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -48,12 +51,12 @@ const ViewSubmissions = () => {
       loadSubmissions();
     } catch (error) {
       console.error('Error marking as read:', error);
-      alert('Error updating submission');
+      showToast('Error updating submission', 'error');
     }
   };
 
   const deleteSubmission = async (id, type) => {
-    if (confirm('Are you sure you want to delete this submission?')) {
+    if (window.confirm('Are you sure you want to delete this submission?')) {
       try {
         if (type === 'Contact') {
           await contactAPI.delete(id);
@@ -63,7 +66,7 @@ const ViewSubmissions = () => {
         loadSubmissions();
       } catch (error) {
         console.error('Error deleting submission:', error);
-        alert('Error deleting submission');
+        showToast('Error deleting submission', 'error');
       }
     }
   };
@@ -243,6 +246,16 @@ const ViewSubmissions = () => {
           )}
         </div>
       </div>
+      
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          duration={toast.duration}
+        />
+      )}
     </div>
   );
 };

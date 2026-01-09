@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { galleryAPI } from '../../services/api';
+import { useToast } from '../../hooks/useToast';
+import Toast from '../../components/common/Toast';
 
 const ManageGallery = () => {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const ManageGallery = () => {
     imageType: '',
     isVisible: true
   });
+  const { toast, showToast, hideToast } = useToast();
 
   const categories = ['Events', 'Sports', 'Cultural', 'Infrastructure', 'Academics'];
 
@@ -37,7 +40,7 @@ const ManageGallery = () => {
       setImages(data);
     } catch (error) {
       console.error('Error loading images:', error);
-      alert('Error loading gallery images');
+      showToast('Error loading gallery images', 'error');
     } finally {
       setLoading(false);
     }
@@ -49,13 +52,13 @@ const ManageGallery = () => {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      alert('Please select an image file');
+      showToast('Please select an image file', 'warning');
       return;
     }
 
     // Validate file size (1MB = 1048576 bytes)
     if (file.size > 1048576) {
-      alert('Image size must be less than 1MB');
+      showToast('Image size must be less than 1MB', 'warning');
       return;
     }
 
@@ -77,7 +80,7 @@ const ManageGallery = () => {
     e.preventDefault();
     
     if (!currentImage.imageData && !isEditing) {
-      alert('Please select an image');
+      showToast('Please select an image', 'warning');
       return;
     }
 
@@ -85,16 +88,16 @@ const ManageGallery = () => {
     try {
       if (isEditing) {
         await galleryAPI.update(currentImage._id, currentImage);
-        alert('Image updated successfully!');
+        showToast('Image updated successfully!', 'success');
       } else {
         await galleryAPI.create(currentImage);
-        alert('Image uploaded successfully!');
+        showToast('Image uploaded successfully!', 'success');
       }
       loadImages();
       resetForm();
     } catch (error) {
       console.error('Error saving image:', error);
-      alert(error.response?.data?.message || 'Error saving image');
+      showToast(error.response?.data?.message || 'Error saving image', 'error');
     } finally {
       setUploading(false);
     }
@@ -109,14 +112,14 @@ const ManageGallery = () => {
   };
 
   const handleDelete = async (id) => {
-    if (confirm('Are you sure you want to delete this image?')) {
+    if (window.confirm('Are you sure you want to delete this image?')) {
       try {
         await galleryAPI.delete(id);
-        alert('Image deleted successfully!');
+        showToast('Image deleted successfully!', 'success');
         loadImages();
       } catch (error) {
         console.error('Error deleting image:', error);
-        alert('Error deleting image');
+        showToast('Error deleting image', 'error');
       }
     }
   };
@@ -127,7 +130,7 @@ const ManageGallery = () => {
       loadImages();
     } catch (error) {
       console.error('Error toggling visibility:', error);
-      alert('Error updating visibility');
+      showToast('Error updating visibility', 'error');
     }
   };
 
@@ -307,6 +310,16 @@ const ManageGallery = () => {
           </div>
         </div>
       </div>
+      
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+          duration={toast.duration}
+        />
+      )}
     </div>
   );
 };
